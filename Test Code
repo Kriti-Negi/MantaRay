@@ -1,0 +1,43 @@
+#include <Servo.h>
+Servo servo1;
+Servo servo2;
+int const s1 = D3;//Green
+int const s2 = D4;
+int const enA = D5;
+int const in1 = D6;
+int const in2 = D9;
+
+int pos = 0;
+
+void setup() {
+  // put your setup code here, to run once:
+  servo1.attach(s1);
+  servo2.attach(s2);
+  pinMode(enA, OUTPUT);
+  pinMode(in1, OUTPUT);
+  pinMode(in2, OUTPUT);
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, LOW);
+  Serial.begin(9600);
+}
+
+void loop() {
+  
+  // put your main code here, to run repeatedly:
+  for (pos =0; pos <= 180; pos += 1){
+    servo1.write(pos);
+    servo2.write(pos);
+    analogWrite(enA, pos);
+    digitalWrite(in1, LOW);
+    digitalWrite(in2, HIGH);
+    delay(15);
+  }
+  for(pos = 180; pos >=0; pos -=1){
+    servo1.write(pos);
+    servo2.write(pos);
+    analogWrite(enA, 255);
+    digitalWrite(in1, LOW);
+    digitalWrite(in2, LOW); // Stop before looping
+    delay(15);
+  }
+}
